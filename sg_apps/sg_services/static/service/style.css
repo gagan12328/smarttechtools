@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap');
+
+:root {
+    --primary: hsl(33deg 99% 61%);
+    --primary-dark: hsl(33deg 99% 51%);
+    --primary-dim: hsl(33deg 99% 41%);
+    --navbar-height: 60px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    padding-top: var(--navbar-height);
+    line-height: 1.6;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-bottom: 1px solid #dadada;
+    padding: 0 16px;
+    height: var(--navbar-height);
+    background: #fff;
+    
+    .logo {
+        font-weight: 600;
+        text-decoration: uppercase;
+        margin-right: auto;
+    }
+    
+    .container {
+        display: flex;
+        align-items: center;
+        height: var(--navbar-height);
+    }
+}
+
+.container {
+    max-width: 800px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    
+    @media (max-width: 767px) {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+.upload-container {
+    padding: 16px;
+    background: var(--primary);
+    margin-top: 32px;
+    
+    .upload-inner {
+        min-height: 250px;
+        padding: 16px;
+        background: var(--primary-dark);
+        border: 2px dashed var(--primary-dim);
+        border-radius: 4px;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+    }
+            
+    .icon {
+        width: 44px;
+        margin-right: 8px;
+    }
+}
+
+.upload-file-btn {
+    input[type="file"] {
+        opacity: 0;
+        visibility: hidden;
+        overflow: hidden;
+        width: 0;
+        height: 0;
+    }
+    
+    .label-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        text-align: center;
+        padding: 16px 24px;
+        border-radius: 4px;
+        background-color: #fff;
+        color: #111;
+        text-transform: uppercase;
+        border: 0;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 600;
+        
+        &:hover {
+            background-color: #eee;
+        }
+    }
+}
