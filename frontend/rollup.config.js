@@ -29,14 +29,21 @@ function serve() {
 	};
 }
 
+function loadPage(name) {
+  return {
+    input: `src/pages/${name}/main.js`,
+    output: {
+      sourcemap: true,
+      format: 'iife',
+      name: 'app',
+      file: 'public/build/bundle.js',
+      dir: production ? `build/pages/${name}` : undefined,
+    },
+  };
+}
+
 export default {
-	input: 'src/main.js',
-	output: {
-		sourcemap: true,
-		format: 'iife',
-		name: 'app',
-		file: 'public/build/bundle.js'
-	},
+	...loadPage(process.env.PAGE),
 	plugins: [
 		svelte({
 			compilerOptions: {
