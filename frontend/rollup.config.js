@@ -5,8 +5,22 @@ import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
 import sveltePreprocess from 'svelte-preprocess';
+import alias from '@rollup/plugin-alias'
+import image from '@rollup/plugin-image';
+import path from 'path'
+
+const projectRootDir = path.resolve(__dirname);
 
 const production = !process.env.ROLLUP_WATCH;
+
+const aliases = alias({
+  resolve: ['.svelte', '.js', '.ts'], //optional, by default this will just look for .js files or folders
+  entries: [
+    { find: 'Components', replacement: path.resolve(projectRootDir, 'src/Components') },
+    { find: 'Layout', replacement: path.resolve(projectRootDir, 'src/Layout') },
+    { find: 'Utils', replacement: path.resolve(projectRootDir, 'src/Utils') },
+  ],
+})
 
 function serve() {
 	let server;
@@ -45,6 +59,8 @@ function loadPage(name) {
 export default {
 	...loadPage(process.env.PAGE),
 	plugins: [
+    aliases,
+    image(),
 		svelte({
 			compilerOptions: {
 				// enable run-time checks when not in production
