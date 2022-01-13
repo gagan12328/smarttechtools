@@ -1,21 +1,7 @@
 <header id="header">
-  <nav>
-    <div class="container">
-      <div class="nav-left">
-        <a class="nav-left-logo" href="index.php">
-          <img src="img/logo.png" alt="">
-        </a>
-      </div>
-    </div>
+  <nav class="navbar navbar-light bg-light fixed-top">
+    <a class="navbar-brand" href="/">
+      <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" alt="">
+    </a>
   </nav>
 </header>
-
-<style>
-  nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-  }
-</style>
