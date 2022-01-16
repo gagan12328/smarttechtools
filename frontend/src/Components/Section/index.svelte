@@ -1,0 +1,11 @@
+<section>
+  <div class="container ml-auto mr-auto">
+    <slot></slot>
+  </div>
+</section>
+
+<style lang="postcss">
+  section {
+    padding: 70px 0;
+  }
+</style>

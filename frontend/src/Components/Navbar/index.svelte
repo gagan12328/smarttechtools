@@ -2,7 +2,9 @@
   import { fade } from 'svelte/transition';
   import Logo from 'Components/Logo/SmartTechTools.svg';
   import Icon from 'Components/Icon/index.svelte';
+  import Tool from 'Components/Tool/index.svelte';
   import clickOutside from 'Utils/clickOuside';
+  import allTools from 'Data/tools';
 
   let open = false;
 
@@ -38,15 +40,13 @@
       </button>
       {#if open}
         <div in:fade="{{duration: 100}}" out:fade="{{duration: 100}}" class="nav-tool-dropdown bg-white">
-          <a href="/" class="flex items-center">
-            <span class="pl-1">Home</span>
-          </a>
-          <a href="/" class="flex items-center">
-            <span class="pl-1">Settings</span>
-          </a>
-          <a href="/" class="flex items-center">
-            <span class="pl-1">Help</span>
-          </a>
+          <h3 class="font-bold">All Tools</h3>
+          <hr class="mt-2 mb-3" />
+          <div class="flex flex-wrap gap-3">
+            {#each allTools as tool}
+              <Tool class="flex-shrink-0" showArrow={false} display="inline" name={tool.name} link={tool.link} icon={tool.icon} />
+            {/each}
+          </div>
         </div>
       {/if}
     </div>
@@ -61,7 +61,7 @@
     right: 0;
     z-index: 1000;
     height: var(--header-height);
-    border-bottom: 1px solid #f0f0f3;
+    border-bottom: 1px solid var(--border-color);
   }
 
   .container {
@@ -82,11 +82,11 @@
   }
 
   .btn-tool:hover {
-    border: 1px solid #f0f0f3;
+    border: 1px solid var(--border-color);
   }
 
   .btn-tool.open {
-    background-color: #f0f0f3;
+    background-color: var(--border-color);
   }
 
   .nav-tool-dropdown {
@@ -94,9 +94,9 @@
     right: 0;
     top: 100%;
     margin-top: 1rem;
-    border: 1px solid #f0f0f3;
+    border: 1px solid var(--border-color);
     border-radius: 4px;
     padding: 0.8rem;
-    min-width: 350px;
+    min-width: 315px;
   }
 </style>

@@ -10,7 +10,10 @@
       ],
       "Utils/*": [
         "src/Utils/*"
-      ]
+      ],
+      "Data/*": [
+        "src/Data/*"
+      ],
     }
   }
 }

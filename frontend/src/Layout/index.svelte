@@ -8,6 +8,8 @@
   @tailwind utilities;
 
   :root {
+    --border-color: #f0f0f3;
+
     /* header */
     --header-height: 70px;
   }
