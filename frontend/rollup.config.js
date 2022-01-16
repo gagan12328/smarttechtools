@@ -8,6 +8,7 @@ import sveltePreprocess from 'svelte-preprocess';
 import alias from '@rollup/plugin-alias'
 import image from '@rollup/plugin-image';
 import path from 'path'
+import envVars from 'rollup-plugin-inject-process-env'
 
 const projectRootDir = path.resolve(__dirname);
 
@@ -91,6 +92,8 @@ export default {
 			dedupe: ['svelte']
 		}),
 		commonjs(),
+
+    envVars(),
 
 		// In dev mode, call `npm run start` once
 		// the bundle has been generated

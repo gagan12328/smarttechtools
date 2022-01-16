@@ -16,7 +16,7 @@ export default [
   {
     name: 'PDF to Doc',
     icon: '/assets/pdfToDoc.svg',
-    description: 'Convert PDFs to editable Word documents',
+    description: 'Convert your PDF to WORD documents with incredible accuracy',
     link: '/pdf-to-doc',
     id: 'pdfToDoc',
   },
@@ -30,8 +30,20 @@ export default [
 ]
 
 export const TOOL_COLOR_MAP = {
-  PDF_TO_IMAGE: '#f5f5f5',
-  IMAGE_TO_PDF: '#f5f5f5',
-  PDF_TO_DOC: '#f5f5f5',
-  DOC_TO_PDF: '#f5f5f5',
+  pdfToImage: {
+    'document-color': 'hsl(141, 76%, 60%)',
+    'document-color-light': 'hsl(141, 76%, 70%)',
+  },
+  imageToPdf: {
+    'document-color': 'hsl(345, 97%, 60%)',
+    'document-color-light': 'hsl(345, 97%, 70%)',
+  },
+  pdfToDoc: {
+    'document-color': 'hsl(205, 76%, 60%)',
+    'document-color-light': 'hsl(205, 76%, 70%)',
+  },
+  docToPdf: {
+    'document-color': 'hsl(345, 97%, 60%)',
+    'document-color-light': 'hsl(345, 97%, 70%)',
+  },
 }

@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "build": "rollup -c",
-    "dev:tools": "PAGE=tools rollup -c -w",
+    "dev:allTools": "PAGE=allTools rollup -c -w",
+    "dev:tool": "PAGE=tool rollup -c -w",
     "start": "sirv public --no-clear"
   },
   "devDependencies": {
@@ -16,6 +17,7 @@
     "postcss": "^8.4.5",
     "rollup": "^2.3.4",
     "rollup-plugin-css-only": "^3.1.0",
+    "rollup-plugin-inject-process-env": "^1.3.1",
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-svelte": "^7.0.0",
     "rollup-plugin-terser": "^7.0.0",

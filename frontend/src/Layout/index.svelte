@@ -15,7 +15,8 @@
   }
 
   body {
-    margin-top: var(--header-height)
+    margin-top: var(--header-height);
+    font-family: 'Noto Sans', sans-serif;
   }
 
   .material-icons {
@@ -30,6 +31,7 @@
     word-wrap: normal;
     white-space: nowrap;
     direction: ltr;
+    vertical-align: middle;
 
     /* Support for all WebKit browsers. */
     -webkit-font-smoothing: antialiased;
