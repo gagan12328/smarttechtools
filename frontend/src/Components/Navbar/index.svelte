@@ -17,7 +17,7 @@
   };
 </script>
 
-<nav class="navbar flex items-start">
+<nav class="navbar flex items-start bg-white">
   <div class="container ml-auto mr-auto flex flex-wrap items-center">
     <div>
       <a href="/" class="flex items-center">

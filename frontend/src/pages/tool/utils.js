@@ -1,14 +1,15 @@
-import tools, { TOOL_COLOR_MAP } from 'Data/tools.js';
+import tools, { TOOLS_META_DATA } from 'Data/tools.js';
 
 export const getPageData = (link) => {
   const pageData = tools.find(tool => tool.link === link)
 
   if (pageData) {
-    pageData.color = TOOL_COLOR_MAP[pageData.id]
+    pageData.metadata = TOOLS_META_DATA[pageData.id];
+    const theme = pageData.metadata.theme;
 
     if (typeof window !== 'undefined') {
-      Object.keys(pageData.color).forEach(key => {
-        document.body.style.setProperty(`--${key}`, pageData.color[key])
+      Object.keys(theme).forEach(key => {
+        document.body.style.setProperty(`--${key}`, theme[key])
       })
     }
   }

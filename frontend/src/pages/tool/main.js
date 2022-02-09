@@ -6,7 +6,7 @@ const link = process.env.PAGE_LINK || '/image-to-pdf'
 const app = new App({
 	target: document.body,
   props: {
-    ...getPageData(link),
+    pageData: getPageData(link),
   }
 });
 
