@@ -1,70 +1,125 @@
-import forEach from "lodash/forEach";
-import trim from "lodash/trim";
+import forEach from 'lodash/forEach'
+import trim from 'lodash/trim'
 
 const defaults = {
   basePath: process.env.API_BASE_PATH,
   method: 'get',
 }
 
-function parseHeaders(headers) {
-  let parsed = {};
-  let key;
-  let val;
-  let i;
+const ignoreDuplicateOf = [
+  'age',
+  'authorization',
+  'content-length',
+  'content-type',
+  'etag',
+  'expires',
+  'from',
+  'host',
+  'if-modified-since',
+  'if-unmodified-since',
+  'last-modified',
+  'location',
+  'max-forwards',
+  'proxy-authorization',
+  'referer',
+  'retry-after',
+  'user-agent',
+]
 
-  if (!headers) { return parsed; }
+function parseHeaders(headers) {
+  let parsed = {}
+  let key
+  let val
+  let i
+
+  if (!headers) {
+    return parsed
+  }
 
   forEach(headers.split('\n'), function parser(line) {
-    i = line.indexOf(':');
-    key = trim(line.substr(0, i)).toLowerCase();
-    val = trim(line.substr(i + 1));
+    i = line.indexOf(':')
+    key = trim(line.substr(0, i)).toLowerCase()
+    val = trim(line.substr(i + 1))
 
     if (key) {
       if (parsed[key] && ignoreDuplicateOf.indexOf(key) >= 0) {
-        return;
+        return
       }
       if (key === 'set-cookie') {
-        parsed[key] = (parsed[key] ? parsed[key] : []).concat([val]);
+        parsed[key] = (parsed[key] ? parsed[key] : []).concat([val])
       } else {
-        parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
+        parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val
       }
     }
-  });
+  })
 
-  return parsed;
-};
+  return parsed
+}
 
 function request(url, options) {
   return new Promise((resolve, reject) => {
-    const requestOptions = { ...defaults, ...options };
-    const request = new XMLHttpRequest();
+    const requestOptions = { ...defaults, ...options }
+    let request = new XMLHttpRequest()
+    let requestData = requestOptions.data
+    let responseType = requestOptions.responseType
 
     const onloadend = () => {
-      const responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
-      const responseData = !responseType || responseType === 'text' || responseType === 'json' ?
-        request.responseText : request.response;
+      const responseHeaders =
+        'getAllResponseHeaders' in request
+          ? parseHeaders(request.getAllResponseHeaders())
+          : null
+      const responseData =
+        !responseType || responseType === 'text' || responseType === 'json'
+          ? request.responseText
+          : request.response
 
-      var response = {
+      const response = {
         data: responseData,
         status: request.status,
         statusText: request.statusText,
         headers: responseHeaders,
         config: requestOptions,
-        request: request
-      };
+        request: request,
+      }
+
+      resolve(response)
+      request = null
     }
 
-    request.timeout = requestOptions.timeout;
+    if ('onloadend' in request) {
+      request.onloadend = onloadend
+    } else {
+      request.onreadystatechange = function handleLoad() {
+        if (!request || request.readyState !== 4) {
+          return
+        }
+        if (
+          request.status === 0 &&
+          !(request.responseURL && request.responseURL.indexOf('file:') === 0)
+        ) {
+          return
+        }
+        setTimeout(onloadend)
+      }
+    }
+
+    request.timeout = requestOptions.timeout
     request.onabort = (error) => {
-      reject(error);
-      request = null;
+      reject(error)
+      request = null
     }
     request.onerror = (error) => {
-      reject(error);
-      request = null;
+      reject(error)
+      request = null
     }
-  });
+
+    if (!requestData) {
+      requestData = null
+    }
+
+    request.send(requestData)
+  })
 }
 
-export default request;
-export { defaults };
+export default request
+export { defaults }

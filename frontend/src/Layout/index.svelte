@@ -1,6 +1,14 @@
 <script>
-  import Navbar from 'Components/Navbar/index.svelte';
+  import Navbar from 'Components/Navbar/index.svelte'
 </script>
+
+<header>
+  <Navbar />
+</header>
+
+<main>
+  <slot />
+</main>
 
 <style global lang="postcss">
   @tailwind base;
@@ -19,11 +27,3 @@
     font-family: 'Noto Sans', sans-serif;
   }
 </style>
-
-<header>
-  <Navbar />
-</header>
-
-<main>
-  <slot></slot>
-</main>

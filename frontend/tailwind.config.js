@@ -2,9 +2,9 @@ module.exports = {
   mode: 'jit',
   // you dont need `purge: enabled: production` because you are using jit
   purge: [
-    "./src/**/*.svelte",
+    './src/**/*.svelte',
     // may also want to include HTML files
-    "./src/**/*.html"
+    './src/**/*.html',
   ],
   darkMode: 'class',
   theme: {
@@ -12,4 +12,4 @@ module.exports = {
   },
   variants: {},
   plugins: [],
-};
+}

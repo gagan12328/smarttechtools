@@ -1,18 +1,18 @@
 <script>
-  import Icon from 'Components/Icon/index.svelte';
-  import classNames from 'Utils/classNames';
+  import Icon from 'Components/Icon/index.svelte'
+  import classNames from 'Utils/classNames'
 
-  export let display = 'block';
-  export let name = '';
-  export let icon = '';
-  export let link = '';
-  export let description = '';
-  export let showArrow = true;
+  export let display = 'block'
+  export let name = ''
+  export let icon = ''
+  export let link = ''
+  export let description = ''
+  export let showArrow = true
 </script>
 
-<a href="{link}" class="{classNames('tool', display, $$props.class)}">
+<a href={link} class={classNames('tool', display, $$props.class)}>
   <div class="tool-icon">
-    <img src="{icon}" alt="{name}">
+    <img src={icon} alt={name} />
   </div>
   <div class="tool-content">
     <div class="tool-name">

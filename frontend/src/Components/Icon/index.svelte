@@ -1,7 +1,7 @@
 <script>
-  import classNames from 'Utils/classNames';
+  import classNames from 'Utils/classNames'
 
-  export let name;
+  export let name
 </script>
 
-<span class="{classNames('material-icons', $$props.class)}">{name}</span>
+<span class={classNames('material-icons', $$props.class)}>{name}</span>

@@ -1,6 +1,6 @@
 <section>
   <div class="container ml-auto mr-auto pl-4 pr-4">
-    <slot></slot>
+    <slot />
   </div>
 </section>
 
