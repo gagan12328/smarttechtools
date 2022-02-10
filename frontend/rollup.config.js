@@ -14,6 +14,8 @@ const projectRootDir = path.resolve(__dirname);
 
 const production = !process.env.ROLLUP_WATCH;
 
+const API_BASE_PATH = 'http://35.154.213.35:8000';
+
 const aliases = alias({
   resolve: ['.svelte', '.js', '.ts'], //optional, by default this will just look for .js files or folders
   entries: [
@@ -93,7 +95,10 @@ export default {
 		}),
 		commonjs(),
 
-    envVars(),
+    envVars({
+      PAGE_LINK: process.env.PAGE_LINK,
+      API_BASE_PATH,
+    }),
 
 		// In dev mode, call `npm run start` once
 		// the bundle has been generated

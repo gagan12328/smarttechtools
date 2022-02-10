@@ -1,15 +1,16 @@
 <script>
   import Layout from 'Layout/index.svelte';
   import Section from 'Components/Section/index.svelte';
-  // import Tool from 'Components/Tool/index.svelte';
-  // import allTools from 'Data/tools';
   import Dropzone from 'Components/Dropzone/index.svelte';
+  import { onFilesChange, fileUploadStore } from './store';
+
+  export let apiBasePath = "";
 
   export let pageData = {};
 
   let files;
 
-  $: console.log(files);
+  $: files, onFilesChange(files, apiBasePath, pageData.metadata.api);
 
   $: pageData, console.log(pageData);
 </script>
@@ -26,7 +27,7 @@
     </div>
     <p class="text-center text-lg mt-2 max-w-lg ml-auto mr-auto">{pageData.description}</p>
     <div class="mt-20 max-w-5xl ml-auto mr-auto">
-      <Dropzone accept={pageData.metadata?.inputFiles?.join(",")} bind:files />
+      <Dropzone accept={pageData.metadata?.inputFiles?.join(",")} bind:files isUploading={$fileUploadStore.isUploading} uploadProgress={$fileUploadStore.uploadProgress} />
     </div>
   </Section>
 </Layout>
