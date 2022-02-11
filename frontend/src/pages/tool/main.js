@@ -7,7 +7,6 @@ const app = new App({
   target: document.body,
   props: {
     pageData: getPageData(link),
-    apiBasePath: process.env.API_BASE_PATH,
   },
 })
 

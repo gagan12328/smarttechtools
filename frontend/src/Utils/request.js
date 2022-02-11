@@ -62,28 +62,43 @@ function request(url, options) {
     let request = new XMLHttpRequest()
     let requestData = requestOptions.data
     let responseType = requestOptions.responseType
+    let requestHeaders= requestOptions.headers
 
     const onloadend = () => {
-      const responseHeaders =
-        'getAllResponseHeaders' in request
-          ? parseHeaders(request.getAllResponseHeaders())
-          : null
-      const responseData =
-        !responseType || responseType === 'text' || responseType === 'json'
-          ? request.responseText
-          : request.response
+      if (request) {
+        const responseHeaders =
+          'getAllResponseHeaders' in request
+            ? parseHeaders(request.getAllResponseHeaders())
+            : null
+        const responseData =
+          !responseType || responseType === 'text' || responseType === 'json'
+            ? request.responseText
+            : request.response
 
-      const response = {
-        data: responseData,
-        status: request.status,
-        statusText: request.statusText,
-        headers: responseHeaders,
-        config: requestOptions,
-        request: request,
+        const response = {
+          data: responseData,
+          status: request.status,
+          statusText: request.statusText,
+          headers: responseHeaders,
+          config: requestOptions,
+          request: request,
+        }
+
+        resolve(response)
+        request = null
       }
+    }
 
-      resolve(response)
-      request = null
+    request.open(requestOptions.method, requestOptions.basePath + url, true);
+
+    if ('setRequestHeader' in request) {
+      forEach(requestHeaders, function setRequestHeader(val, key) {
+        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
+          delete requestHeaders[key];
+        } else {
+          request.setRequestHeader(key, val);
+        }
+      });
     }
 
     if ('onloadend' in request) {
@@ -101,6 +116,16 @@ function request(url, options) {
         }
         setTimeout(onloadend)
       }
+    }
+
+    // Handle progress if needed
+    if (typeof requestOptions.onDownloadProgress === 'function') {
+      request.addEventListener('progress', requestOptions.onDownloadProgress);
+    }
+
+    // Not all browsers support upload events
+    if (typeof requestOptions.onUploadProgress === 'function' && request.upload) {
+      request.upload.addEventListener('progress', requestOptions.onUploadProgress);
     }
 
     request.timeout = requestOptions.timeout

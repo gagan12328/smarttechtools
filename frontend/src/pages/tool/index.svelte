@@ -4,13 +4,11 @@
   import Dropzone from 'Components/Dropzone/index.svelte'
   import { onFilesChange, fileUploadStore } from './store'
 
-  export let apiBasePath = ''
-
   export let pageData = {}
 
   let files
 
-  $: files, onFilesChange(files, apiBasePath, pageData.metadata.api)
+  $: files, onFilesChange(files, pageData.metadata.api)
 
   $: pageData, console.log(pageData)
 </script>

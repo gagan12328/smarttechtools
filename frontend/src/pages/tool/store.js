@@ -6,7 +6,7 @@ export const fileUploadStore = writable({
   uploadProgress: 0,
 })
 
-export const onFilesChange = (files, baseURL, url) => {
+export const onFilesChange = (files, url) => {
   if (files) {
     if (files instanceof FileList) {
       files = Array.from(files)
@@ -23,13 +23,18 @@ export const onFilesChange = (files, baseURL, url) => {
       formData.append('doc_type', file.type.split('/')[1])
       formData.append('convert_doc', file)
       console.log({ url, formData })
-      request({
+      request(url, {
         method: 'post',
-        url,
         data: formData,
         headers: {
           'Content-Type': 'multipart/form-data',
         },
+        onUploadProgress: (e) => {
+          fileUploadStore.set({
+            isUploading: false,
+            uploadProgress: e.loaded,
+          })
+        }
       })
         .then((res) => {
           console.log(res)

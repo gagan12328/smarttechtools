@@ -2,6 +2,7 @@
 module.exports = {
   globals: {
     process: true,
+    require: true,
   },
   env: {
     browser: true,
