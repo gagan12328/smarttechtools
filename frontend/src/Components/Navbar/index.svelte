@@ -46,7 +46,7 @@
         <div
           in:fade={{ duration: 100 }}
           out:fade={{ duration: 100 }}
-          class="nav-tool-dropdown bg-white"
+          class="nav-tool-dropdown bg-white shadow-xl"
         >
           <h3 class="font-bold">All Tools</h3>
           <hr class="mt-2 mb-3" />

@@ -10,6 +10,7 @@ import image from '@rollup/plugin-image'
 import path from 'path'
 import envVars from 'rollup-plugin-inject-process-env'
 
+// eslint-disable-next-line no-undef
 const projectRootDir = path.resolve(__dirname)
 
 const production = !process.env.ROLLUP_WATCH
@@ -102,6 +103,7 @@ export default {
     envVars({
       PAGE_LINK: process.env.PAGE_LINK,
       API_BASE_PATH,
+      NODE_ENV: "development",
     }),
 
     // In dev mode, call `npm run start` once

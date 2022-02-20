@@ -3,8 +3,11 @@
   import Section from 'Components/Section/index.svelte'
   import Dropzone from 'Components/Dropzone/index.svelte'
   import { onFilesChange, fileUploadStore } from './store'
+  import { getPageData } from './utils'
 
-  export let pageData = {}
+  const link = process.env.PAGE_LINK || '/image-to-pdf'
+
+  export let pageData = getPageData(link);
 
   let files
 
