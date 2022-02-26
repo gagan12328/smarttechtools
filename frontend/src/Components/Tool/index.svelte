@@ -12,7 +12,7 @@
 
 <a href={link} class={classNames('tool', display, $$props.class)}>
   <div class="tool-icon">
-    <img src={icon} alt={name} />
+    {@html icon}
   </div>
   <div class="tool-content">
     <div class="tool-name">
@@ -38,7 +38,7 @@
     border: 1px solid var(--border-color);
     border-radius: 4px;
     padding: 1rem;
-    width: 285px;
+    width: 100%;
     max-width: 100%;
     text-decoration: none;
   }

@@ -1,7 +1,7 @@
 const exportConfig = {
   input: "src/main.js",
   output: "dist/bundle.js",
-  apiBasePath: "http://35.154.213.35:8000",
+  apiBasePath: "http://smarttechtools.com",
   template: "public/template.html",
   pages: [
     {

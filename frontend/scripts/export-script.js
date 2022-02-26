@@ -155,6 +155,8 @@ async function generateHtmlTemplate(template, html, css, inlineCss) {
 }
 
 function exportToHtml() {
+  let converted = 0;
+  console.log('Exporting to HTML. Please wait...');
   rollupConfig.forEach(async (config) => {
     try {
       const { generate } = await rollup(config.server)
@@ -168,13 +170,15 @@ function exportToHtml() {
       const clientSide = await rollup(config.client);
       const clientBundle = await clientSide.generate({ format: 'iife', exports: 'auto', name: 'App' })
 
+
       const clientEntryChunk = clientBundle.output.find((chunkOrAsset) => chunkOrAsset.isEntry)
+      const clientCSS = clientBundle.output.find((chunkOrAsset) => chunkOrAsset.fileName === 'bundle.css');
 
       const processedHtml = await posthtml([
         exportConfig.template && insertAt({ selector: '#app', prepend: html }),
-        exportConfig.template && css.code && insertAt({
+        exportConfig.template && clientCSS.source && insertAt({
           selector: 'head',
-          append: `<style>${formatCss(css.code)}</style>`
+          append: `<style>${clientCSS.source}</style>`
         }),
         insertAt({
           selector: 'head',
@@ -187,8 +191,13 @@ function exportToHtml() {
       ].filter(Boolean)).process(htmlTemplate)
 
       await fs.outputFile(path.join(path.resolve() + '/dist', `${config.output}.html`), processedHtml.html)
-      // fs.outputFile(config.output.file, entryChunk.code)
+
+      converted += 1;
+      if (converted === rollupConfig.length) {
+        console.log('Done!!, All HTMLs are exported to dist folder')
+      }
     } catch (err) {
+      converted += 1;
       console.log(err);
     }
   })

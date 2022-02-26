@@ -12,10 +12,9 @@
       Our collection of Tech tools to process digital documents and streamline
       your workflow seamlessly.
     </p>
-    <div class="mt-20 flex justify-center">
+    <div class="mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {#each allTools as tool}
         <Tool
-          class="flex-shrink-0 ml-1.5 mr-1.5"
           name={tool.name}
           link={tool.link}
           icon={tool.icon}

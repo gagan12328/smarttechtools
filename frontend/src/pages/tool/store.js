@@ -1,53 +1,26 @@
 import { writable } from 'svelte/store'
-import request from 'Utils/request'
+import { FILE_STATUS } from './constants';
+
+export const filesStore = writable([]);
+export const isFileConverting = writable(false);
+
+export const addFilesToStore = (files) => {
+  filesStore.set(files);
+}
+
+export const removeFileFromStore = (file) => {
+  filesStore.update((files) => files.filter(f => f.id !== file.id));
+}
+
+export const updateFile = (file) => {
+  filesStore.update((files) => files.map((f) => f.id === file.id ? { ...file } : f))
+}
+
+filesStore.subscribe((files) => {
+  isFileConverting.set(Boolean(files.find((file) => file.status === FILE_STATUS.UPLOADING)))
+})
 
 export const fileUploadStore = writable({
   isUploading: false,
   uploadProgress: 0,
 })
-
-export const onFilesChange = (files, url) => {
-  if (files) {
-    if (files instanceof FileList) {
-      files = Array.from(files)
-    }
-    console.log(files)
-    if (files.length) {
-      const file = files[0]
-      fileUploadStore.set({
-        isUploading: true,
-        uploadProgress: 0,
-      })
-      const formData = new FormData()
-      formData.append('authentication', 'rtyuio')
-      formData.append('doc_type', file.type.split('/')[1])
-      formData.append('convert_doc', file)
-      console.log({ url, formData })
-      request(url, {
-        method: 'post',
-        data: formData,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        onUploadProgress: (e) => {
-          fileUploadStore.set({
-            isUploading: false,
-            uploadProgress: e.loaded,
-          })
-        }
-      })
-        .then((res) => {
-          console.log(res)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-        .finally(() => {
-          fileUploadStore.set({
-            isUploading: false,
-            uploadProgress: 0,
-          })
-        })
-    }
-  }
-}

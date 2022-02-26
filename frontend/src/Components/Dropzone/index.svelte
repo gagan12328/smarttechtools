@@ -3,18 +3,12 @@
 
   export let files = undefined
 
-  export let isUploading = false
-
-  export let uploadProgress = 0
-
   let isDragging = false
 
   let fileInput
 
   const handleFileDrop = (ev) => {
     ev.preventDefault()
-    console.log(ev)
-
     let droppedFiles = []
     if (ev.dataTransfer.items) {
       // Use DataTransferItemList interface to access the file(s)
@@ -55,58 +49,44 @@
   on:dragover={handleFileDragOver}
   on:dragleave={handleFileDragEnd}
 >
-  {#if isDragging}
-    <div class="dropzone-container relative overflow-hidden">
-      <div class="input-control" />
-      <div class="dragging bg-blue-400 animate-pulse" />
-      <div class="dragging-upload-label">
-        <Icon name="upload" class="text-5xl animate-bounce" />
-      </div>
-    </div>
-  {:else if isUploading}
-    <div class="dropzone-container relative overflow-hidden">
-      <div class="input-control" />
-      <div
-        class="dragging bg-white opacity-50 transition-all"
-        style={`width: ${uploadProgress}%`}
+  <div class="dz-container dark:bg-stone-800 p-5">
+    <div class="dz-content">
+      <input
+        {...$$restProps}
+        class="input-control"
+        bind:this={fileInput}
+        type="file"
+        id="file_jfkll2f"
+        bind:files
       />
-      <div class="dragging-upload-label">
-        <h3 class="text-2xl">Uploading {uploadProgress}%</h3>
+      <button
+        class="upload-btn"
+        on:click|preventDefault={handleUploadClick}
+        title="Choose files to upload"
+      >
+        {#if isDragging}
+          <span class="upload-btn-label">
+            Drop
+          </span>
+        {:else}
+          <span class="upload-btn-label">
+            Choose Files
+          </span>
+          <span class="upload-icon">
+            <Icon name="content_paste_search" />
+          </span>
+        {/if}
+      </button>
+      <div class="label-text text-stone-400 text-sm text-center mt-2">
+        <div>Drop files here. 10 MB maximum file size.</div>
       </div>
     </div>
-  {:else}
-    <form class="dropzone-container">
-      <label class="input-control" for="file_jfkll2f">
-        <input
-          {...$$restProps}
-          bind:this={fileInput}
-          type="file"
-          id="file_jfkll2f"
-          bind:files
-        />
-        <div class="pt-6">
-          <button
-            class="upload-btn"
-            on:click|preventDefault={handleUploadClick}
-          >
-            <span class="upload-icon mr-2">
-              <Icon name="upload_file" />
-            </span>
-            CHOOSE FILES
-          </button>
-          <div class="label-text text-white text-sm text-center mt-2">
-            or
-            <div>DROP FILES HERE</div>
-          </div>
-        </div>
-      </label>
-    </form>
-  {/if}
+  </div>
 </div>
 
 <style>
   .dropzone {
-    --dropzone-height: 300px;
+    --dropzone-height: 200px;
   }
 
   @media (max-width: 767px) {
@@ -115,38 +95,23 @@
     }
   }
 
-  .dropzone-container {
-    width: 100%;
-    border: 1px solid var(--document-color);
-    background: linear-gradient(
-      16deg,
-      var(--document-color) 5%,
-      var(--document-color-light) 100%
-    );
-    padding: 0.5rem;
-    border-radius: 2px;
-  }
-
-  .dragging {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-  }
-
   .input-control {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: var(--dropzone-height);
-    cursor: pointer;
+    display: none;
   }
 
-  .input-control input {
-    display: none;
+  .dz-container {
+    background-image: linear-gradient(45deg,rgba(0,0,0,.06) 25%,transparent 0),linear-gradient(-45deg,rgba(0,0,0,.06) 25%,transparent 0),linear-gradient(45deg,transparent 75%,rgba(0,0,0,.06) 0),linear-gradient(-45deg,transparent 75%,rgba(0,0,0,.06) 0);
+    background-size: 24px 24px;
+    background-position: 0 0,0 12px,12px -12px,-12px 0;
+  }
+
+  .dz-content {
+    padding: 20px 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: var(--dropzone-height);
   }
 
   .upload-btn {
@@ -154,22 +119,22 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    background-color: #ffffff;
+    background: var(--document-color);
     border-radius: 4px;
-    padding: 1.2rem 1.7rem;
-    font-weight: bold;
+    padding: 0.8rem 1.5rem;
+    font-weight: 400;
     border: 0;
   }
 
-  .dragging-upload-label {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .upload-btn-label {
+    padding: 0 3.5rem;
+  }
+
+  .upload-icon {
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    vertical-align: middle;
+    padding: 4px;
   }
 </style>

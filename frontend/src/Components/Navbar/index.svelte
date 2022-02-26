@@ -1,6 +1,6 @@
 <script>
   import { fade } from 'svelte/transition'
-  import Logo from 'Components/Logo/SmartTechTools.svg'
+  import Logo from 'Components/Logo/SmartTechTools.svelte'
   import Icon from 'Components/Icon/index.svelte'
   import Tool from 'Components/Tool/index.svelte'
   import clickOutside from 'Utils/clickOuside'
@@ -17,11 +17,11 @@
   }
 </script>
 
-<nav class="navbar flex items-start bg-white">
+<nav class="navbar flex items-start">
   <div class="container ml-auto mr-auto flex flex-wrap items-center">
     <div>
       <a href="/" class="flex items-center">
-        <img class="logo-image" src={Logo} alt="Smart Tech Tools Logo" />
+        <Logo />
       </a>
     </div>
     <div
@@ -46,7 +46,7 @@
         <div
           in:fade={{ duration: 100 }}
           out:fade={{ duration: 100 }}
-          class="nav-tool-dropdown bg-white shadow-xl"
+          class="nav-tool-dropdown shadow-xl"
         >
           <h3 class="font-bold">All Tools</h3>
           <hr class="mt-2 mb-3" />
@@ -77,14 +77,11 @@
     z-index: 1000;
     height: var(--header-height);
     border-bottom: 1px solid var(--border-color);
+    background-color: var(--bg-color);
   }
 
   .container {
     height: var(--header-height);
-  }
-
-  .logo-image {
-    height: 60px;
   }
 
   .btn-tool {
@@ -113,5 +110,6 @@
     border-radius: 4px;
     padding: 0.8rem;
     min-width: 315px;
+    background-color: var(--bg-color-dim);
   }
 </style>
