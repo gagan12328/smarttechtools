@@ -193,6 +193,7 @@
     .fl-content > div {
       flex: 1;
       width: 100%;
+      max-width: 100%;
       text-align: left;
       padding: 4px 0;
     }

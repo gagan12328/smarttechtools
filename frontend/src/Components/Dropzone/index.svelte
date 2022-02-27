@@ -100,13 +100,12 @@
   }
 
   .dz-container {
-    background-image: linear-gradient(45deg,rgba(0,0,0,.06) 25%,transparent 0),linear-gradient(-45deg,rgba(0,0,0,.06) 25%,transparent 0),linear-gradient(45deg,transparent 75%,rgba(0,0,0,.06) 0),linear-gradient(-45deg,transparent 75%,rgba(0,0,0,.06) 0);
-    background-size: 24px 24px;
-    background-position: 0 0,0 12px,12px -12px,-12px 0;
+    background-color: var(--bg-color-dim);
+    border-radius: 4px;
   }
 
   .dz-content {
-    padding: 20px 50px;
+    padding: 16px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -121,7 +120,7 @@
     text-align: center;
     background: var(--document-color);
     border-radius: 4px;
-    padding: 0.8rem 1.5rem;
+    padding: 0.8rem 1rem;
     font-weight: 400;
     border: 0;
   }
@@ -136,5 +135,11 @@
     height: 35px;
     vertical-align: middle;
     padding: 4px;
+  }
+
+  @media (max-width: 767px) {
+    .upload-btn-label {
+      padding: 0 1rem;
+    }
   }
 </style>
