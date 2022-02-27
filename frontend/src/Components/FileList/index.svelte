@@ -39,14 +39,14 @@
           </div>
         </div>
         <div class="fl-item-aciton">
-          {#if item.status !== fileStatues.UPLOADING}
-            <button class="btn-close" on:click="{() => handleRemove(item)}">
-              <Icon name="close" />
-            </button>
-          {:else if item.status === fileStatues.PROCESSED}
-            <button class="btn-download" on:click="{() => saveFile(item.download)}">
-              Download
-            </button>
+          {#if item.status === fileStatues.PROCESSED}
+          <button class="btn-download" on:click="{() => saveFile(item.download)}">
+            Download
+          </button>
+          {:else if item.status !== fileStatues.UPLOADING}
+          <button class="btn-close" on:click="{() => handleRemove(item)}">
+            <Icon name="close" />
+          </button>
           {/if}
         </div>
       </div>

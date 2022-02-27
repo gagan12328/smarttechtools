@@ -11,7 +11,7 @@ const createFormData = ({ bin }) => {
 
 export const uploadFilesSequence = (url, files, fileSizeLimit, updateFilesStatus) => {
   files.forEach(async (file) => {
-    if (file.bin.size > fileSizeLimit) {
+    if (file.bin.size > fileSizeLimit || file.status === FILE_STATUS.PROCESSED) {
       return;
     }
 
@@ -25,9 +25,6 @@ export const uploadFilesSequence = (url, files, fileSizeLimit, updateFilesStatus
       const response = await request(url, {
         method: 'post',
         data: formData,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
         // onUploadProgress: (e) => {
         //   // updateFilesStatus({
         //   //   ...file,
@@ -35,10 +32,11 @@ export const uploadFilesSequence = (url, files, fileSizeLimit, updateFilesStatus
         //   // });
         // }
       })
-      if (response && response.file_path) {
+      if (response && response.data) {
+        const data = JSON.parse(response.data);
         updateFilesStatus({
           ...file,
-          download: response.file_path,
+          download: data.file_path,
           status: FILE_STATUS.PROCESSED,
         });
       } else {
